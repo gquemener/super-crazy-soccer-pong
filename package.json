@@ -8,16 +8,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "heroku-postbuild": "./node_modules/gugulp"
+      "heroku-postbuild": "gulp"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@cycle/dom": "^14.2.0",
     "@cycle/xstream-run": "^4.1.0",
-    "xstream": "^9.2.0"
-  },
-  "devDependencies": {
+    "xstream": "^9.2.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
     "gulp": "^3.9.1",
