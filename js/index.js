@@ -20,21 +20,24 @@ function main(sources) {
             y: 100,
             velX: 1,
             velY: 1
-        }
+        },
+        speed: 1,
     };
 
     const keys$ = sources.DOM.select('document').events('keydown');
-    const keyA$ = keys$.filter(ev => 'KeyA' === ev.code).mapTo(1);
-    const keyS$ = keys$.filter(ev => 'KeyS' === ev.code).mapTo(-1);
-    const keyJ$ = keys$.filter(ev => 'KeyJ' === ev.code).mapTo(1);
-    const keyK$ = keys$.filter(ev => 'KeyK' === ev.code).mapTo(-1);
-    const left$ = xs.merge(keyA$, keyS$).fold((x, y) => x + y, initParty.paddles.left);
-    const right$ = xs.merge(keyJ$, keyK$).fold((x, y) => x + y, initParty.paddles.right);
-    const paddles$ = xs.combine(left$, right$).map((combined) => {
-        return {
-            left: combined[0],
-            right: combined[1],
-        };
+    const keyA$ = keys$.filter(ev => 'KeyA' === ev.code).mapTo(1).startWith(0);
+    const keyS$ = keys$.filter(ev => 'KeyS' === ev.code).mapTo(-1).startWith(0);
+    const keyJ$ = keys$.filter(ev => 'KeyJ' === ev.code).mapTo(1).startWith(0);
+    const keyK$ = keys$.filter(ev => 'KeyK' === ev.code).mapTo(-1).startWith(0);
+    const left$ = xs.merge(keyA$, keyS$);
+    const right$ = xs.merge(keyJ$, keyK$);
+    const paddles$ = xs.combine(left$, right$)
+        .map((combined) => {
+            return {
+                left: combined[0],
+                right: combined[1],
+            };
+        });
 
     function step(timestamp) {
         listener.next();
@@ -51,10 +54,32 @@ function main(sources) {
         stop: () => {}
     });
 
-    const game$ = xs.combine(paddles$, frame$)
-        .map((combine) => combine[0])
-        .fold((game, paddles) => {
-            game.paddles = paddles;
+    const speed$ = xs.periodic(10000).mapTo(1).fold((x, y) => x + y, 1);
+    const game$ = xs.combine(paddles$, speed$, frame$)
+        .map((combine) => {
+            let game = combine[0];
+            game.speed = combine[1];
+
+            return game;
+        })
+        .fold((game, next) => {
+            const getNextPaddlePosition = (current, direction, speed) => {
+                let next = current + (direction * speed);
+                if (next < -16) {
+                    return -16;
+                }
+
+                if (next > 146) {
+                    return 146;
+                }
+
+                return next;
+            };
+            game.paddles = {
+                left: getNextPaddlePosition(game.paddles.left, next.left, game.speed),
+                right: getNextPaddlePosition(game.paddles.right, next.right, game.speed),
+            };
+            game.speed = next.speed;
 
             if (null !== game.party.winner) {
                 game.party.ended = true;
@@ -99,12 +124,17 @@ function main(sources) {
                 if (null !== game.party.winner) {
                     return h2('.winner', 'Winner: ' + game.party.winner);
                 }
-                return div('#playground', {}, [
-                    div('.paddle-hand.left'),
-                    div('.paddle-hand.right'),
-                    div('#paddleA.paddle', { style: { top : game.paddles.left + 'px'} }),
-                    div('#paddleB.paddle', { style: { top : game.paddles.right + 'px'} }),
-                    div('#ball', { style: { top : game.ball.y + 'px', left: game.ball.x + 'px'} })
+                return div([
+                    h2('Level: ' + game.speed),
+                    div('#game', {}, [
+                        div('#playground', {}, [
+                            div('.paddle-hand.left'),
+                            div('.paddle-hand.right'),
+                            div('#paddleA.paddle', { style: { top : game.paddles.left + 'px'} }),
+                            div('#paddleB.paddle', { style: { top : game.paddles.right + 'px'} }),
+                            div('#ball', { style: { top : game.ball.y + 'px', left: game.ball.x + 'px'} })
+                        ])
+                    ])
                 ]);
             }),
         sound: soundSink(game$),
@@ -114,6 +144,6 @@ function main(sources) {
 }
 
 run(main, {
-    DOM: makeDOMDriver('#game'),
+    DOM: makeDOMDriver('#app'),
     sound: soundDriver,
 });
