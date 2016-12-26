@@ -4,6 +4,10 @@ This is an attempt to create a video game based on the classic Pong gameplay.
 
 It's using pure HTML5 technologies, as well as pure reactive functionnal javascript (using Cycle.js).
 
+## Demo
+
+[http://super-crazy-soccer-pong.herokuapp.com](Try it online!)
+
 ## Installation
 
 Make sure you have installed nodejs and run:
