@@ -8,7 +8,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "postinstall": "npm install && gulp"
+      "heroku-postbuild": "./node_modules/gugulp"
   },
   "author": "",
   "license": "ISC",
