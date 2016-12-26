@@ -1,10 +1,14 @@
 {
-  "name": "Super Crazy Soccer Pong",
+  "name": "super-crazy-soccer-pong",
   "version": "1.0.0",
+  "engines": {
+      "node": "7.2.1",
+      "npm": "4.0.3"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "postinstall": "gulp"
   },
   "author": "",
   "license": "ISC",
