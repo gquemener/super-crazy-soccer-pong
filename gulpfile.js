@@ -11,41 +11,46 @@ var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babel = require('babelify');
+var del = require('del');
 
 gulp.task('default', ['clean', 'js', 'less']);
 
-gulp.task('clean', () => gulp.src('./public', {read: false}).pipe(clean()));
+gulp.task('clean', () => {
+    del.sync(['public'], { force: true });
+});
 
 function compile(watch) {
-  var bundler = watchify(browserify('./js/index.js', { debug: true }).transform(babel));
+    var bundler = browserify('./js/index.js', { debug: true }).transform(babel);
 
-  function rebundle() {
-    bundler.bundle()
-      .on('error', function(err) { console.error(err); this.emit('end'); })
-      .pipe(source('build.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({ loadMaps: true }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./public/js'));
-  }
+    function rebundle() {
+        bundler.bundle()
+            .on('error', function(err) { console.error(err); this.emit('end'); })
+            .pipe(source('build.js'))
+            .pipe(buffer())
+            .pipe(sourcemaps.init({ loadMaps: true }))
+            .pipe(sourcemaps.write('./'))
+            .pipe(gulp.dest('./public/js'));
+    }
 
-  if (watch) {
-    bundler.on('update', function() {
-      console.log('-> bundling...');
-      rebundle();
-    });
-  }
+    if (watch) {
+        bundler = watchify(bundler);
+        bundler.on('update', function() {
+            console.log('-> bundling...');
+            rebundle();
+            console.log('done.');
+        });
+    }
 
-  rebundle();
+    rebundle();
 }
 
 function watch() {
   return compile(true);
 };
 
-gulp.task('js', () => compile());
+gulp.task('js', () => compile(false));
 gulp.task('less', function () {
-    gulp.src('./less/**/*.less')
+    return gulp.src('./less/**/*.less')
         .pipe(less({
           paths: [ path.join(__dirname, 'less', 'includes') ]
         }))

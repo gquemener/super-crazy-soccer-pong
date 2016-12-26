@@ -1,29 +1,30 @@
 {
-  "name": "super-crazy-soccer-pong",
-  "version": "1.0.0",
-  "engines": {
-      "node": "7.2.1",
-      "npm": "4.0.3"
-  },
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-      "heroku-postbuild": "gulp"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@cycle/dom": "^14.2.0",
-    "@cycle/xstream-run": "^4.1.0",
-    "xstream": "^9.2.0",
-    "babelify": "^7.3.0",
-    "browserify": "^13.1.1",
-    "gulp": "^3.9.1",
-    "gulp-clean": "^0.3.2",
-    "gulp-less": "^3.3.0",
-    "gulp-sourcemaps": "^1.9.1",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.8.0"
-  }
+    "name": "super-crazy-soccer-pong",
+    "version": "1.0.0",
+    "engines": {
+        "node": "7.2.1",
+        "npm": "4.0.3"
+    },
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "heroku-postbuild": "gulp"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@cycle/dom": "^14.2.0",
+        "@cycle/xstream-run": "^4.1.0",
+        "babel-preset-env": "^1.1.4",
+        "babelify": "^7.3.0",
+        "browserify": "^13.1.1",
+        "gulp": "^3.9.1",
+        "gulp-clean": "^0.3.2",
+        "gulp-less": "^3.3.0",
+        "gulp-sourcemaps": "^1.9.1",
+        "vinyl-buffer": "^1.0.0",
+        "vinyl-source-stream": "^1.1.0",
+        "watchify": "^3.8.0",
+        "xstream": "^9.2.0"
+    }
 }
