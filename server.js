@@ -8,7 +8,9 @@ var mimeTypes = {
     "wav": "audio/wav",
     "png": "image/png",
     "js": "text/javascript",
-    "css": "text/css"};
+    "css": "text/css"
+};
+var port = process.env.PORT || 3000;
 
 http.createServer(function(req, res) {
     var uri = url.parse(req.url).pathname;
@@ -29,4 +31,4 @@ http.createServer(function(req, res) {
         var fileStream = fs.createReadStream(filename);
         fileStream.pipe(res);
     });
-}).listen(80);
+}).listen(port);
