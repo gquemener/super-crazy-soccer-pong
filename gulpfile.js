@@ -16,7 +16,7 @@ var del = require('del');
 gulp.task('default', ['clean', 'js', 'less']);
 
 gulp.task('clean', () => {
-    del.sync(['public'], { force: true });
+    del.sync(['public/dist'], { force: true });
 });
 
 function compile(watch) {
@@ -29,7 +29,7 @@ function compile(watch) {
             .pipe(buffer())
             .pipe(sourcemaps.init({ loadMaps: true }))
             .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest('./public/js'));
+            .pipe(gulp.dest('./public/dist/js'));
     }
 
     if (watch) {
@@ -54,7 +54,7 @@ gulp.task('less', function () {
         .pipe(less({
           paths: [ path.join(__dirname, 'less', 'includes') ]
         }))
-        .pipe(gulp.dest('./public/css'))
+        .pipe(gulp.dest('./public/dist/css'))
 });
 
 gulp.task('watch js', () => watch());
