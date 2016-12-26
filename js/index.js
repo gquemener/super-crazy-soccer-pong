@@ -35,9 +35,23 @@ function main(sources) {
             left: combined[0],
             right: combined[1],
         };
+
+    function step(timestamp) {
+        listener.next();
+        window.requestAnimationFrame(step);
+    }
+    const frame$ = xs.create({
+        start: (listener) => {
+            let step = (timestamp) => {
+                listener.next(timestamp);
+                window.requestAnimationFrame(step);
+            };
+            window.requestAnimationFrame(step);
+        },
+        stop: () => {}
     });
 
-    const game$ = xs.combine(paddles$, xs.periodic(15))
+    const game$ = xs.combine(paddles$, frame$)
         .map((combine) => combine[0])
         .fold((game, paddles) => {
             game.paddles = paddles;
