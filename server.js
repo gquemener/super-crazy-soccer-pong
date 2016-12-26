@@ -20,13 +20,13 @@ http.createServer(function(req, res) {
     var filename = path.join(process.cwd(), uri);
     fs.access(filename, fs.constants.F_OK, (err) => {
         if (err) {
-            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.write('404 Not Found\n');
             return res.end();
         }
 
         var mimeType = mimeTypes[path.extname(filename).split(".")[1]];
-        res.writeHead(200, mimeType);
+        res.writeHead(200, { 'Content-Type': mimeType });
 
         var fileStream = fs.createReadStream(filename);
         fileStream.pipe(res);
