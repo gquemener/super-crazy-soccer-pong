@@ -29,4 +29,4 @@ http.createServer(function(req, res) {
         var fileStream = fs.createReadStream(filename);
         fileStream.pipe(res);
     });
-}).listen(1337);
+}).listen(80);
