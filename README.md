@@ -26,6 +26,19 @@ $ php -S localhost:8081
 
 and open http://localhost:8081 in your favourite browser.
 
+## How-to
+This games require 2 players with perfect reflex skills (just "ok skill" will be fine though).
+
+### Player1 controls
+A: go down
+
+B: go up
+
+### Player2 controls
+J: go down
+
+K: go up
+
 ## Contribution
 
 Any contributions are always welcome, even just to discuss about improvements ;)
