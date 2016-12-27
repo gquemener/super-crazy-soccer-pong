@@ -1,9 +1,12 @@
 import xs from 'xstream';
 import {run} from '@cycle/xstream-run';
 import {makeDOMDriver, div, h2} from '@cycle/dom';
-import soundSink from './sinks/sound';
 import soundDriver from './drivers/sound';
-import getRandomArbitrary from './utils/random';
+import getRandomArbitrary from './game/utils/random';
+import border from './game/sound/border';
+import shotLeft from './game/sound/shotLeft';
+import shotRight from './game/sound/shotRight';
+import score from './game/sound/score';
 
 function main(sources) {
     const initParty = {
@@ -137,7 +140,12 @@ function main(sources) {
                     ])
                 ]);
             }),
-        sound: soundSink(game$),
+        sound: xs.merge(
+            border(game$),
+            shotLeft(game$),
+            shotRight(game$),
+            score(game$)
+        ),
     };
 
     return sinks;
