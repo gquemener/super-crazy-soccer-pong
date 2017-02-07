@@ -6,7 +6,7 @@ It's using pure HTML5 technologies, as well as pure reactive functionnal javascr
 
 ## Demo
 
-[http://super-crazy-soccer-pong.herokuapp.com](Try it online!)
+[Try it online!](http://super-crazy-soccer-pong.herokuapp.com)
 
 ## Installation
 
