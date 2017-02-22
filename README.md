@@ -19,16 +19,16 @@ $ npm install
 You may now build the assets using the following command:
 
 ```bash
-$ gulp
+$ npm start
 ```
 
-Last steps consists to open the index.html using your favourite webserver. For example, with php installed, you might do:
+Last steps consists to open the index.html using your favourite webserver.
 
 ```bash
-$ php -S localhost:8081
+$ node server.js
 ```
 
-and open http://localhost:8081 in your favourite browser.
+and open http://localhost:3000 in your favourite browser.
 
 ## How-to
 This games require 2 players with perfect reflex skills (just "ok skill" will be fine though).

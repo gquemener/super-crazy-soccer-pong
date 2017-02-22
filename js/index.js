@@ -1,3 +1,5 @@
+import '../less/pingpong.less';
+
 import xs from 'xstream';
 import {run} from '@cycle/xstream-run';
 import {makeDOMDriver, div, h2} from '@cycle/dom';
