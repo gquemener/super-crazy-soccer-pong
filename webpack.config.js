@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack'); //to access built-in plugins
 
 const config = {
     entry: './js/index.js',
@@ -9,6 +10,14 @@ const config = {
     },
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015']
+                }
+            },
             {
                 test: /\.less/,
                 loaders: [
@@ -24,7 +33,10 @@ const config = {
                 ]
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin()
+    ]
 };
 
 module.exports = config;
