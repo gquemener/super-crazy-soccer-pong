@@ -8,7 +8,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config webpack.config.js"
+    "start": "node server.js",
+    "build": "webpack --config webpack.config.js",
+    "heroku-postbuild": "npm run-script build"
   },
   "author": "Gildas Quéméner <gildas.quemener@gmail.com>",
   "license": "MIT",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "css-loader": "^0.26.1",
+    "file-loader": "^0.10.0",
     "less-loader": "^2.2.3",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1"
